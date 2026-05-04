@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AMS | Attendance Management System",
+  title: "ClassPass | Attendance Management System",
   description: "A modern NFC-based attendance and fee management solution for educational institutes.",
 };
 

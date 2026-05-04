@@ -65,7 +65,7 @@ export function FeatureGrid() {
             Everything You Need
           </h2>
           <p className="text-lg text-muted-foreground">
-            AMS provides a comprehensive suite of tools designed to handle every aspect of student management, from attendance to payments.
+            ClassPass provides a comprehensive suite of tools designed to handle every aspect of student management, from attendance to payments.
           </p>
         </div>
 

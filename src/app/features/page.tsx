@@ -17,7 +17,7 @@ export default function FeaturesPage() {
         >
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">Deep Dive into Features</h1>
           <p className="text-xl text-muted-foreground">
-            Explore the powerful modules that make AMS the ultimate solution for educational institutes.
+            Explore the powerful modules that make ClassPass the ultimate solution for educational institutes.
           </p>
         </motion.div>
 

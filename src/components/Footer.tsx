@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Activity } from "lucide-react";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -8,10 +8,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1 space-y-4">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="bg-primary/10 p-2 rounded-lg">
-                <Activity className="h-6 w-6 text-primary" />
+              <div className="bg-primary/10 p-1.5 rounded-lg">
+                <Image src="/logo-ams.png" alt="ClassPass Logo" width={24} height={24} className="object-contain" />
               </div>
-              <span className="text-xl font-bold tracking-tight">AMS</span>
+              <span className="text-xl font-bold tracking-tight">ClassPass</span>
             </Link>
             <p className="text-sm text-muted-foreground">
               A modern NFC-based attendance and fee management solution for educational institutes.
@@ -49,7 +49,7 @@ export function Footer() {
 
         <div className="border-t mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Attendance Management System. All rights reserved.
+            © {new Date().getFullYear()} ClassPass. All rights reserved.
           </p>
           <div className="flex gap-4">
             {/* Add social links here if needed */}

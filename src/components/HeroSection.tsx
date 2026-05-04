@@ -20,7 +20,7 @@ export function HeroSection() {
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary mb-8 border border-primary/20"
         >
           <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
-          <span className="text-sm font-medium">AMS v1.0 MVP is now live</span>
+          <span className="text-sm font-medium">ClassPass v1.0 MVP is now live</span>
         </motion.div>
 
         <motion.h1

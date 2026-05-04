@@ -22,7 +22,7 @@ export function ArchitectureTeaser() {
               Robust & Scalable Architecture
             </h2>
             <p className="text-lg text-muted-foreground mb-6">
-              Built on a microservices-inspired design, AMS handles high throughput of NFC scans and real-time updates effortlessly. The system leverages secure API gateways, PostgreSQL, and Redis caching to ensure a seamless experience.
+              Built on a microservices-inspired design, ClassPass handles high throughput of NFC scans and real-time updates effortlessly. The system leverages secure API gateways, PostgreSQL, and Redis caching to ensure a seamless experience.
             </p>
             <ul className="space-y-4 mb-8">
               {[

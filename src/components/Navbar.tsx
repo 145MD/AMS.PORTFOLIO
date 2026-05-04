@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Activity, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -24,10 +25,10 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="bg-primary/10 p-2 rounded-lg group-hover:bg-primary/20 transition-colors">
-                <Activity className="h-6 w-6 text-primary" />
+              <div className="bg-primary/10 p-1.5 rounded-lg group-hover:bg-primary/20 transition-colors">
+                <Image src="/logo-ams.png" alt="ClassPass Logo" width={24} height={24} className="object-contain" />
               </div>
-              <span className="text-xl font-bold tracking-tight">AMS</span>
+              <span className="text-xl font-bold tracking-tight">ClassPass</span>
             </Link>
           </div>
 
