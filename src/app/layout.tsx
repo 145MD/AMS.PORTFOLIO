@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     siteName: "ClassPass",
     images: [
       {
-        url: "/logo-ams.png",
+        url: "/logo-ams-wbg.png",
         width: 1200,
         height: 630,
         alt: "ClassPass Cover Image",
