@@ -8,9 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1 space-y-4">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="bg-primary/10 p-1.5 rounded-lg">
-                <Image src="/logo-ams.png" alt="ClassPass Logo" width={24} height={24} className="object-contain" />
-              </div>
+              <Image src="/logo-ams.svg" alt="ClassPass Logo" width={28} height={28} className="object-contain transition-transform group-hover:scale-105" />
               <span className="text-xl font-bold tracking-tight">ClassPass</span>
             </Link>
             <p className="text-sm text-muted-foreground">
@@ -31,7 +29,14 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Resources</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="https://github.com/your-org/ams" className="hover:text-primary transition-colors">Documentation</Link></li>
+              <li>
+                <a 
+                  href="javascript:alert('Documentation will be available soon!')" 
+                  className="hover:text-primary transition-colors cursor-pointer"
+                >
+                  Documentation
+                </a>
+              </li>
               <li><Link href="#" className="hover:text-primary transition-colors">API Reference</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Help Center</Link></li>
             </ul>

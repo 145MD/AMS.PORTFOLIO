@@ -48,10 +48,10 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
-          <Link href="/get-started" className={cn(buttonVariants({ size: "lg" }), "gap-2 h-12 px-8 text-base")}>
+          <button disabled className={cn(buttonVariants({ size: "lg" }), "gap-2 h-12 px-8 text-base cursor-not-allowed opacity-50")}>
             Get Started
             <ArrowRight className="h-4 w-4" />
-          </Link>
+          </button>
           <Link href="/features" className={cn(buttonVariants({ size: "lg", variant: "outline" }), "gap-2 h-12 px-8 text-base bg-background/50 backdrop-blur-sm")}>
             Explore Features
           </Link>

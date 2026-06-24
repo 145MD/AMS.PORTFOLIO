@@ -16,7 +16,14 @@ export function Navbar() {
   const links = [
     { name: "Home", href: "/" },
     { name: "Features", href: "/features" },
-    { name: "Documentation", href: "https://github.com/your-org/ams" },
+    { 
+      name: "Documentation", 
+      href: "#", 
+      onClick: (e: React.MouseEvent) => {
+        e.preventDefault();
+        alert("Documentation will be available soon!");
+      }
+    },
   ];
 
   return (
@@ -25,19 +32,18 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="bg-primary/10 p-1.5 rounded-lg group-hover:bg-primary/20 transition-colors">
-                <Image src="/logo-ams.png" alt="ClassPass Logo" width={24} height={24} className="object-contain" />
-              </div>
+              <Image src="/logo-ams.svg" alt="ClassPass Logo" width={28} height={28} className="object-contain transition-transform group-hover:scale-105" />
               <span className="text-xl font-bold tracking-tight">ClassPass</span>
             </Link>
           </div>
-
+ 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {links.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
+                onClick={link.onClick}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-primary",
                   pathname === link.href ? "text-foreground" : "text-muted-foreground"
@@ -47,16 +53,16 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
-
+ 
           <div className="hidden md:flex items-center gap-4">
-            <Link href="/login" className={buttonVariants({ variant: "ghost" })}>
+            <Button variant="ghost" disabled className="cursor-not-allowed opacity-50">
               Sign In
-            </Link>
-            <Link href="/get-started" className={buttonVariants({})}>
+            </Button>
+            <Button disabled className="cursor-not-allowed opacity-50">
               Get Started
-            </Link>
+            </Button>
           </div>
-
+ 
           {/* Mobile Menu Button */}
           <button
             className="md:hidden p-2 text-muted-foreground hover:text-foreground"
@@ -85,18 +91,21 @@ export function Navbar() {
                     "block text-base font-medium transition-colors hover:text-primary",
                     pathname === link.href ? "text-foreground" : "text-muted-foreground"
                   )}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    if (link.onClick) link.onClick(e);
+                    setIsMobileMenuOpen(false);
+                  }}
                 >
                   {link.name}
                 </Link>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t">
-                <Link href="/login" className={cn(buttonVariants({ variant: "outline" }), "w-full")} onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="outline" disabled className="w-full cursor-not-allowed opacity-50">
                   Sign In
-                </Link>
-                <Link href="/get-started" className={cn(buttonVariants({}), "w-full")} onClick={() => setIsMobileMenuOpen(false)}>
+                </Button>
+                <Button disabled className="w-full cursor-not-allowed opacity-50">
                   Get Started
-                </Link>
+                </Button>
               </div>
             </div>
           </motion.div>
