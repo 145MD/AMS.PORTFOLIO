@@ -1,65 +1,25 @@
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+import { Brand } from "@/components/Brand";
+import { Reveal } from "@/components/Reveal";
 
 export function Footer() {
   return (
-    <footer className="border-t bg-muted/40">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1 space-y-4">
-            <Link href="/" className="flex items-center gap-2 group">
-              <Image src="/logo-ams.svg" alt="ClassPass Logo" width={28} height={28} className="object-contain transition-transform group-hover:scale-105" />
-              <span className="text-xl font-bold tracking-tight">ClassPass</span>
-            </Link>
-            <p className="text-sm text-muted-foreground">
-              A modern NFC-based attendance and fee management solution for educational institutes.
-            </p>
+    <footer className="relative overflow-hidden bg-[#050c16] text-white">
+      <div className="footer-hairline absolute inset-x-0 top-0 h-px" />
+      <div className="blue-orb absolute -bottom-40 left-1/2 size-[480px] -translate-x-1/2 rounded-full opacity-40 blur-[140px]" />
+      <div className="site-container relative py-16 lg:py-20">
+        <Reveal variant="fade">
+          <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.4fr_.7fr_.7fr]">
+            <div className="max-w-md"><Brand inverse /><p className="mt-6 text-sm leading-7 text-white/45">The operating layer for modern educational institutes—attendance, fees and insights connected in real time.</p></div>
+            <div><p className="mb-5 text-[10px] font-black uppercase tracking-[.2em] text-[#1D8AF4]">Product</p><div className="flex flex-col items-start gap-3 text-sm text-white/55"><Link href="/features" className="transition hover:translate-x-1 hover:text-white">Features</Link><Link href="/packages" className="transition hover:translate-x-1 hover:text-white">Packages</Link><Link href="/features#architecture" className="transition hover:translate-x-1 hover:text-white">Architecture</Link></div></div>
+            <div><p className="mb-5 text-[10px] font-black uppercase tracking-[.2em] text-[#1D8AF4]">Get started</p><a href="mailto:support@ams.com?subject=ClassPass%20product%20demo" className="group inline-flex items-center gap-2 text-sm font-bold transition hover:text-[#1D8AF4]">Book a product demo <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></a></div>
           </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Product</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/features" className="hover:text-primary transition-colors">Features</Link></li>
-              <li><Link href="/features#nfc" className="hover:text-primary transition-colors">NFC Technology</Link></li>
-              <li><Link href="/features#attendance" className="hover:text-primary transition-colors">Attendance</Link></li>
-              <li><Link href="/features#fees" className="hover:text-primary transition-colors">Fee Management</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Resources</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <a 
-                  href="javascript:alert('Documentation will be available soon!')" 
-                  className="hover:text-primary transition-colors cursor-pointer"
-                >
-                  Documentation
-                </a>
-              </li>
-              <li><Link href="#" className="hover:text-primary transition-colors">API Reference</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Help Center</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Company</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">About</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Contact</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ClassPass. All rights reserved.
-          </p>
-          <div className="flex gap-4">
-            {/* Add social links here if needed */}
-          </div>
-        </div>
+          <div className="flex flex-col gap-2 pt-7 text-xs text-white/30 sm:flex-row sm:justify-between"><p>© {new Date().getFullYear()} ClassPass. All rights reserved.</p><p>Built for better education operations.</p></div>
+        </Reveal>
+      </div>
+      <div className="pointer-events-none relative select-none overflow-hidden" aria-hidden="true">
+        <p className="-mb-[.22em] bg-gradient-to-b from-white/[.07] to-transparent bg-clip-text text-center text-[clamp(4rem,15vw,12rem)] font-black leading-none tracking-[-.06em] text-transparent">CLASSPASS</p>
       </div>
     </footer>
   );

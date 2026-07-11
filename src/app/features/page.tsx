@@ -1,122 +1,53 @@
-"use client";
+import type { Metadata } from "next";
+import { ArrowRight, Check, Database, Laptop, Server, Shield, Smartphone } from "lucide-react";
+import Link from "next/link";
+import { Magnetic } from "@/components/Magnetic";
+import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
+import { featureDetails } from "@/data/site";
 
-import { motion } from "framer-motion";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SmartphoneNfc, Building2, CreditCard, CalendarCheck, Wallet, BellRing } from "lucide-react";
-import Image from "next/image";
+export const metadata: Metadata = { title: "Features", description: "Explore the connected ClassPass platform for attendance, fees and institute operations." };
+
+function FeatureSignal({ index, icon: Icon }: { index: number; icon: typeof Smartphone }) {
+  return (
+    <div className="relative flex min-h-[360px] items-center justify-center overflow-hidden rounded-[28px] bg-[#031530]">
+      <div className="ink-grid absolute inset-0" />
+      <div className="absolute size-64 rounded-full border border-white/10" />
+      <div className="orbit-ring absolute size-64"><span className="absolute left-1/2 top-0 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#1D8AF4] shadow-[0_0_14px_rgba(29,138,244,.9)]" /></div>
+      <div className="absolute size-44 rounded-full border border-dashed border-[#1D8AF4]/30 motion-safe:animate-[spin_24s_linear_infinite]" />
+      <span className="float-slow relative flex size-28 items-center justify-center rounded-[24px] bg-gradient-to-br from-[#0C55D0] to-[#1D8AF4] shadow-[0_24px_65px_rgba(29,138,244,.3)]"><Icon className="size-11 text-white" strokeWidth={1.6} /></span>
+      <span className="absolute left-6 top-6 text-[10px] font-black uppercase tracking-[.2em] text-[#1D8AF4]">Signal 0{index + 1}</span>
+      <span className="absolute bottom-7 right-7 flex items-center gap-2 text-[8px] font-bold uppercase tracking-[.14em] text-white/35"><span className="status-pulse size-1.5 rounded-full bg-[#1D8AF4]" /> live module</span>
+    </div>
+  );
+}
 
 export default function FeaturesPage() {
   return (
-    <div className="min-h-screen pt-24 pb-16 bg-zinc-50/50 dark:bg-zinc-950/50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          className="text-center max-w-3xl mx-auto mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">Deep Dive into Features</h1>
-          <p className="text-xl text-muted-foreground">
-            Explore the powerful modules that make ClassPass the ultimate solution for educational institutes.
-          </p>
-        </motion.div>
+    <>
+      <section className="relative overflow-hidden bg-[#020b18] pb-28 pt-40 text-white">
+        <div className="ink-grid absolute inset-0 opacity-60" /><div className="blue-orb-alt absolute -right-40 top-0 size-[500px] rounded-full blur-[120px]" />
+        <Reveal className="site-container relative"><span className="text-[10px] font-black uppercase tracking-[.2em] text-[#1D8AF4]">Platform capabilities</span><h1 className="mt-6 max-w-5xl text-balance text-6xl font-black leading-[.9] tracking-[-.07em] sm:text-8xl">Every operation.<br /><span className="text-transparent bg-gradient-to-r from-[#0C55D0] to-[#1D8AF4] bg-clip-text">One clear system.</span></h1><p className="mt-8 max-w-2xl text-lg leading-8 text-white/50">Four connected modules replace slow, fragmented admin with a real-time operating picture.</p></Reveal>
+      </section>
 
-        <Tabs defaultValue="nfc" className="w-full">
-          <TabsList className="flex flex-wrap h-auto justify-center mb-12 gap-2 bg-transparent">
-            <TabsTrigger value="nfc" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2 text-base py-3 px-6 rounded-full border shadow-sm">
-              <SmartphoneNfc className="h-4 w-4" /> NFC Tech
-            </TabsTrigger>
-            <TabsTrigger value="attendance" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2 text-base py-3 px-6 rounded-full border shadow-sm">
-              <CalendarCheck className="h-4 w-4" /> Attendance
-            </TabsTrigger>
-            <TabsTrigger value="fees" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2 text-base py-3 px-6 rounded-full border shadow-sm">
-              <Wallet className="h-4 w-4" /> Fee Management
-            </TabsTrigger>
-            <TabsTrigger value="pwa" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2 text-base py-3 px-6 rounded-full border shadow-sm">
-              <CreditCard className="h-4 w-4" /> Mobile PWA
-            </TabsTrigger>
-          </TabsList>
+      <section className="section-space bg-[#f4f8fc] text-[#031530]">
+        <div className="site-container space-y-24 lg:space-y-32">
+          {featureDetails.map((feature, index) => <article id={feature.id} key={feature.id} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-24">
+            <Reveal variant={index % 2 ? "right" : "left"} className={index % 2 ? "lg:order-2" : ""}><span className="text-[10px] font-black uppercase tracking-[.2em] text-[#0C55D0]">{feature.eyebrow}</span><h2 className="mt-5 text-5xl font-black leading-[.96] tracking-[-.06em] text-[#031530]">{feature.title}</h2><p className="mt-6 text-lg leading-8 text-slate-600">{feature.description}</p><Stagger step={0.09} delay={0.15} className="mt-8 space-y-3">{feature.points.map((point) => <StaggerItem key={point} variant="left"><p className="flex items-center gap-3 text-sm font-bold text-slate-700"><span className="flex size-6 items-center justify-center rounded-full bg-[#0C55D0]"><Check className="size-3 text-white" /></span>{point}</p></StaggerItem>)}</Stagger></Reveal>
+            <Reveal variant={index % 2 ? "left" : "right"} delay={0.1} className={index % 2 ? "lg:order-1" : ""}><FeatureSignal index={index} icon={feature.icon} /></Reveal>
+          </article>)}
+        </div>
+      </section>
 
-          <div className="bg-background rounded-3xl border shadow-xl p-8 md:p-12">
-            <TabsContent value="nfc" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                  <h3 className="text-3xl font-bold mb-6">Frictionless Check-ins</h3>
-                  <p className="text-lg text-muted-foreground mb-6">
-                    Equip every student with a secure NFC card. Checking into a class is as simple as a tap on the checker&apos;s mobile device.
-                  </p>
-                  <ul className="space-y-4">
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Instant Validation API</li>
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Tamper-proof UUID mapping</li>
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Quick Replacement Flow</li>
-                  </ul>
-                </div>
-                <div className="relative aspect-square md:aspect-video rounded-2xl overflow-hidden bg-primary/5 flex items-center justify-center border">
-                  <SmartphoneNfc className="h-32 w-32 text-primary opacity-50" />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent"></div>
-                </div>
-              </div>
-            </TabsContent>
+      <section id="architecture" className="section-space bg-gradient-to-br from-[#031530] via-[#0C55D0] to-[#1D8AF4] text-white">
+        <div className="site-container grid gap-16 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
+          <Reveal><span className="text-[10px] font-black uppercase tracking-[.2em] text-blue-200">Built to hold the load</span><h2 className="mt-5 text-5xl font-black leading-[.95] tracking-[-.06em]">Infrastructure without the drama.</h2><p className="mt-6 leading-7 text-white/60">A microservices-inspired architecture handles NFC scans and real-time updates through secure gateways, PostgreSQL and Redis caching.</p><div className="mt-8 space-y-3">{["JWT and role-based access", "ACID-compliant PostgreSQL", "Next.js and .NET Core backend"].map((item) => <p key={item} className="flex items-center gap-3 text-sm font-bold"><Shield className="size-4 text-[#1D8AF4]" />{item}</p>)}</div></Reveal>
+          <Stagger step={0.08} delay={0.1} className="relative grid grid-cols-2 gap-px overflow-hidden rounded-[28px] bg-white/15 ring-1 ring-white/15 sm:grid-cols-3">{[
+            { icon: Smartphone, label: "Checker PWA" }, { icon: Laptop, label: "Admin portal" }, { icon: Server, label: "API gateway" }, { icon: Database, label: "PostgreSQL" }, { icon: Shield, label: "Auth service" }, { icon: Server, label: "Redis cache" },
+          ].map((node, index) => <StaggerItem key={node.label} variant="scale"><div className={`${index === 2 ? "node-pulse bg-[#1D8AF4] text-white" : "bg-[#06377f] text-white"} group h-full p-7 text-center transition hover:bg-[#020b18] hover:text-white`}><node.icon className="mx-auto size-6 transition-transform duration-300 group-hover:scale-125" /><p className="mt-4 text-[10px] font-black uppercase tracking-[.14em]">{node.label}</p></div></StaggerItem>)}</Stagger>
+        </div>
+      </section>
 
-            <TabsContent value="attendance" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1 relative aspect-square md:aspect-video rounded-2xl overflow-hidden bg-primary/5 flex items-center justify-center border">
-                  <CalendarCheck className="h-32 w-32 text-primary opacity-50" />
-                </div>
-                <div className="order-1 lg:order-2">
-                  <h3 className="text-3xl font-bold mb-6">Real-time Attendance</h3>
-                  <p className="text-lg text-muted-foreground mb-6">
-                    No more manual roll calls. As soon as a student taps their card, attendance is securely logged in PostgreSQL and reflected across all admin portals instantly.
-                  </p>
-                  <ul className="space-y-4">
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Class-wise daily logs</li>
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Exportable history reports</li>
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Offline sync support</li>
-                  </ul>
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="fees" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                  <h3 className="text-3xl font-bold mb-6">Smart Fee Tracking</h3>
-                  <p className="text-lg text-muted-foreground mb-6">
-                    Automate fee collection and tracking. At the time of a card tap, the system verifies not only identity but also current payment status.
-                  </p>
-                  <ul className="space-y-4">
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Automated Notifications (SMS/Email)</li>
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Grace period handling</li>
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Monthly/Annual structures</li>
-                  </ul>
-                </div>
-                <div className="relative aspect-square md:aspect-video rounded-2xl overflow-hidden bg-primary/5 flex items-center justify-center border">
-                  <Wallet className="h-32 w-32 text-primary opacity-50" />
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="pwa" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1 relative aspect-square md:aspect-video rounded-2xl overflow-hidden bg-primary/5 flex items-center justify-center border">
-                  <CreditCard className="h-32 w-32 text-primary opacity-50" />
-                </div>
-                <div className="order-1 lg:order-2">
-                  <h3 className="text-3xl font-bold mb-6">Card Checker PWA</h3>
-                  <p className="text-lg text-muted-foreground mb-6">
-                    A lightweight Progressive Web App that works on any modern mobile device equipped with an NFC reader. No app store installation required.
-                  </p>
-                  <ul className="space-y-4">
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> WebNFC API Integration</li>
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Extremely low latency</li>
-                    <li className="flex items-center gap-3"><div className="h-2 w-2 rounded-full bg-primary" /> Minimal bandwidth usage</li>
-                  </ul>
-                </div>
-              </div>
-            </TabsContent>
-          </div>
-        </Tabs>
-      </div>
-    </div>
+      <section className="section-space bg-white text-[#031530]"><Reveal variant="scale" className="site-container flex flex-col justify-between gap-8 lg:flex-row lg:items-end"><h2 className="max-w-3xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-6xl">See which package fits your operation.</h2><Magnetic className="inline-flex"><Link href="/packages" className="group inline-flex w-full items-center gap-3 rounded-xl bg-[#0C55D0] px-6 py-4 text-sm font-extrabold text-white transition hover:shadow-[0_18px_45px_rgba(12,85,208,.35)]">Compare packages <ArrowRight className="size-4 transition group-hover:translate-x-1" /></Link></Magnetic></Reveal></section>
+    </>
   );
 }

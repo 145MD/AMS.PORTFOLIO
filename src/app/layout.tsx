@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-
-const inter = Inter({ subsets: ["latin"] });
+import { CursorGlow } from "@/components/CursorGlow";
+import { ScrollProgress } from "@/components/ScrollProgress";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://classpass.lk"),
-  title: "ClassPass | Attendance Management System",
-  description: "A modern NFC-based attendance and fee management solution for educational institutes.",
+  title: {
+    default: "ClassPass | Smarter Institute Management",
+    template: "%s | ClassPass",
+  },
+  description: "A modern NFC-based attendance and fee management platform built for educational institutes.",
   manifest: "/site.webmanifest",
   icons: {
     icon: [
@@ -53,14 +55,16 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${inter.className} h-full antialiased scroll-smooth`}>
+    <html lang="en" className="h-full antialiased">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="min-h-full flex flex-col">
+        <ScrollProgress />
+        <CursorGlow />
         <Navbar />
         <main className="flex-1">
           {children}
