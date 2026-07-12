@@ -1,0 +1,17 @@
+{
+  // Static-assets Worker for the ClassPass marketing site.
+  // The site is a Next.js *static export* (next.config.ts -> output: "export"),
+  // so it is served as plain static files from ./out — NOT via OpenNext/SSR.
+  // Having this file present stops `wrangler deploy` from auto-running the
+  // OpenNext (server) adapter, which fails on a static export.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio",
+  "compatibility_date": "2026-07-12",
+  "assets": {
+    "directory": "./out",
+    // Next export writes /features.html etc. (no trailing slash); serve them at /features.
+    "html_handling": "auto-trailing-slash",
+    // Serve the exported 404 page for unmatched paths.
+    "not_found_handling": "404-page"
+  }
+}

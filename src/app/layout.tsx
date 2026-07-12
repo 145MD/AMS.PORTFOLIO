@@ -53,7 +53,15 @@ export const metadata: Metadata = {
     description: site.description,
     url: site.url,
     siteName: site.name,
-    images: [{ url: "/logo-ams-wbg.png", width: 1200, height: 630, alt: `${site.name}` }],
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        type: "image/jpeg",
+        alt: "ClassPass — NFC tap-card attendance & fee management for institutes",
+      },
+    ],
     locale: "en_US",
     type: "website",
   },
@@ -61,7 +69,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${site.name} — Tap-card attendance & fee management`,
     description: site.description,
-    images: ["/logo-ams-wbg.png"],
+    images: ["/og.jpg"],
   },
 };
 

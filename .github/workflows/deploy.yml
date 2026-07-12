@@ -1,8 +1,11 @@
 name: Deploy Next.js site to Pages
 
+# DISABLED: the site is now hosted on Cloudflare (see wrangler.jsonc).
+# The automatic push trigger is removed so GitHub Pages no longer deploys on
+# every commit and competes with Cloudflare for the classpass.lk domain.
+# Left as manual-only (workflow_dispatch) so it can be re-enabled if needed —
+# to fully restore automatic deploys, re-add the `push` trigger below.
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
 
 permissions:
