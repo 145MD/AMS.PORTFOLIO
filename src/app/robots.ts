@@ -1,13 +1,14 @@
-import type { MetadataRoute } from 'next'
+import type { MetadataRoute } from "next";
+import { site } from "@/lib/content";
 
-export const dynamic = 'force-static'
+export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
-      userAgent: '*',
-      allow: '/',
+      userAgent: "*",
+      allow: "/",
     },
-    sitemap: 'https://classpass.lk/sitemap.xml',
-  }
+    sitemap: `${site.url}/sitemap.xml`,
+  };
 }

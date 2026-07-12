@@ -1,41 +1,67 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Bricolage_Grotesque, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { site } from "@/lib/content";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-bricolage",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://classpass.lk"),
-  title: "ClassPass | Attendance Management System",
-  description: "A modern NFC-based attendance and fee management solution for educational institutes.",
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} — Tap-card attendance & fee management`,
+    template: `%s · ${site.name}`,
+  },
+  description: site.description,
+  applicationName: site.name,
+  keywords: [
+    "NFC attendance",
+    "attendance management",
+    "fee management",
+    "tuition institute software",
+    "student attendance Sri Lanka",
+    "ClassPass",
+  ],
   manifest: "/site.webmanifest",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/favicon.ico", type: "image/x-icon", rel: "shortcut icon" }
+      { url: "/favicon.ico", type: "image/x-icon", rel: "shortcut icon" },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png" }
-    ],
+    apple: [{ url: "/apple-touch-icon.png" }],
   },
   openGraph: {
-    title: "ClassPass | Attendance Management System",
-    description: "A modern NFC-based attendance and fee management solution for educational institutes.",
-    url: "https://classpass.lk",
-    siteName: "ClassPass",
-    images: [
-      {
-        url: "/logo-ams-wbg.png",
-        width: 1200,
-        height: 630,
-        alt: "ClassPass Cover Image",
-      },
-    ],
+    title: `${site.name} — Tap-card attendance & fee management`,
+    description: site.description,
+    url: site.url,
+    siteName: site.name,
+    images: [{ url: "/logo-ams-wbg.png", width: 1200, height: 630, alt: `${site.name}` }],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} — Tap-card attendance & fee management`,
+    description: site.description,
+    images: ["/logo-ams-wbg.png"],
   },
 };
 
@@ -46,14 +72,19 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "ClassPass",
-    url: "https://www.classpass.lk/",
-    logo: "https://www.classpass.lk/favicon.svg",
+    "@type": "SoftwareApplication",
+    name: site.name,
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    url: site.url,
+    description: site.description,
   };
 
   return (
-    <html lang="en" className={`${inter.className} h-full antialiased scroll-smooth`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${bricolage.variable} ${geistMono.variable} h-full`}
+    >
       <head>
         <script
           type="application/ld+json"
@@ -61,8 +92,14 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+        >
+          Skip to content
+        </a>
         <Navbar />
-        <main className="flex-1">
+        <main id="main" className="flex-1">
           {children}
         </main>
         <Footer />

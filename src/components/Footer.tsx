@@ -1,59 +1,81 @@
 import Link from "next/link";
-import Image from "next/image";
+import { Mail, Phone, MapPin } from "lucide-react";
+import { LogoMark } from "@/components/LogoMark";
+import { Cta } from "@/components/primitives";
+import { footerNav, site } from "@/lib/content";
 
 export function Footer() {
   return (
-    <footer className="border-t bg-muted/40">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1 space-y-4">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="bg-primary/10 p-1.5 rounded-lg">
-                <Image src="/logo-ams.png" alt="ClassPass Logo" width={24} height={24} className="object-contain" />
-              </div>
-              <span className="text-xl font-bold tracking-tight">ClassPass</span>
-            </Link>
-            <p className="text-sm text-muted-foreground">
-              A modern NFC-based attendance and fee management solution for educational institutes.
+    <footer className="section-ink relative overflow-hidden">
+      {/* CTA band */}
+      <div className="mx-auto w-full max-w-6xl px-5 pt-20 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-ink-line bg-ink-soft/60 p-8 sm:p-10 md:flex-row md:items-center">
+          <div>
+            <h2 className="text-display text-2xl leading-tight sm:text-3xl">
+              Ready to retire the register?
+            </h2>
+            <p className="mt-2 max-w-md text-sm text-muted-foreground">
+              See ClassPass run attendance and fees for your institute. Book a walkthrough — we&apos;ll
+              tailor it to how you teach.
             </p>
           </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Product</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/features" className="hover:text-primary transition-colors">Features</Link></li>
-              <li><Link href="/features#nfc" className="hover:text-primary transition-colors">NFC Technology</Link></li>
-              <li><Link href="/features#attendance" className="hover:text-primary transition-colors">Attendance</Link></li>
-              <li><Link href="/features#fees" className="hover:text-primary transition-colors">Fee Management</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Resources</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="https://github.com/your-org/ams" className="hover:text-primary transition-colors">Documentation</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">API Reference</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Help Center</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-4">Company</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">About</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Contact</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
-            </ul>
+          <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+            <Cta href="/contact" variant="signal" size="lg" withArrow>
+              Request a demo
+            </Cta>
+            <Cta href="/pricing" variant="outline" size="lg" className="border-ink-line text-paper hover:bg-ink-line/40">
+              See pricing
+            </Cta>
           </div>
         </div>
+      </div>
 
-        <div className="border-t mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ClassPass. All rights reserved.
-          </p>
-          <div className="flex gap-4">
-            {/* Add social links here if needed */}
+      <div className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-16 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)] lg:px-8">
+        <div className="space-y-4">
+          <LogoMark tone="dark" />
+          <p className="max-w-xs text-sm text-muted-foreground">{site.description}</p>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2">
+              <Mail className="size-4 text-signal" />
+              <a href={`mailto:${site.email}`} className="hover:text-paper">
+                {site.email}
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <Phone className="size-4 text-signal" />
+              <a href={site.phoneHref} className="hover:text-paper">
+                {site.phone}
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <MapPin className="size-4 text-signal" />
+              {site.locationLine}
+            </li>
+          </ul>
+        </div>
+
+        {footerNav.map((col) => (
+          <div key={col.title}>
+            <h3 className="text-sm font-semibold text-paper">{col.title}</h3>
+            <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+              {col.links.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="transition-colors hover:text-paper">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
+        ))}
+      </div>
+
+      <div className="border-t border-ink-line">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-sm text-muted-foreground sm:flex-row sm:px-6 lg:px-8">
+          <p>
+            © {new Date().getFullYear()} {site.name}. All rights reserved.
+          </p>
+          <p className="font-mono text-xs">{site.domain}</p>
         </div>
       </div>
     </footer>
