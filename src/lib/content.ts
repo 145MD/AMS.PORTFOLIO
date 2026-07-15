@@ -16,9 +16,9 @@ export const site = {
   domain: "classpass.lk",
   email: "hello@classpass.lk", // PLACEHOLDER
   supportEmail: "support@classpass.lk", // PLACEHOLDER
-  phone: "+94 70 000 0000", // PLACEHOLDER
-  phoneHref: "tel:+94700000000", // PLACEHOLDER
-  whatsapp: "https://wa.me/94700000000", // PLACEHOLDER
+  phone: "+94 71 890 8808", // PLACEHOLDER
+  phoneHref: "tel:+94718908808", // PLACEHOLDER
+  whatsapp: "https://wa.me/94718908808", // PLACEHOLDER
   locationLine: "Colombo, Sri Lanka", // PLACEHOLDER
   appUrl: "https://portal.classpass.lk",
   foundedYear: 2026,
@@ -27,6 +27,7 @@ export const site = {
 export type NavItem = { label: string; href: string };
 
 export const primaryNav: NavItem[] = [
+  { label: "Home", href: "/" },
   { label: "Features", href: "/features" },
   { label: "How it works", href: "/how-it-works" },
   { label: "Pricing", href: "/pricing" },
