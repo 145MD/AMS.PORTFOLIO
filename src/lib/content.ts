@@ -82,6 +82,12 @@ export type Feature = {
   accent?: boolean;
 };
 
+export type FeatureVideo = {
+  src: string;
+  poster?: string;
+  label?: string;
+};
+
 /** The core capability set, drawn from the AMS module docs. */
 export const features: Feature[] = [
   {
@@ -158,6 +164,39 @@ export const features: Feature[] = [
     ],
   },
 ];
+
+/**
+ * Feature page animation links.
+ *
+ * Add each uploaded .mp4 URL to the matching `src` below. Optional poster images
+ * can be added with `poster` if you have them.
+ */
+export const featureVideos: Record<string, FeatureVideo> = {
+  attendance: {
+    src: "https://stagingclasspass.blob.core.windows.net/marketing-portfolio/Tap-to-attend.mp4?sp=r&st=2026-07-15T09:04:23Z&se=2100-07-15T17:19:23Z&spr=https&sv=2026-02-06&sr=b&sig=VqsUxAtJslsaht42CqiiblkddAM%2BKjov0jg1aDej4BE%3D",
+    label: "Tap-to-attend animation",
+  },
+  fees: {
+    src: "https://stagingclasspass.blob.core.windows.net/marketing-portfolio/Fee%20collection%20that%20adds%20up.mp4?sp=r&st=2026-07-15T09:12:02Z&se=2100-07-15T17:27:02Z&spr=https&sv=2026-02-06&sr=b&sig=LxUPX8XIza%2FxTId5x62ZKOC3gtrTxhZOcgNkLEhBmJo%3D",
+    label: "Fee collection animation",
+  },
+  receipts: {
+    src: "https://stagingclasspass.blob.core.windows.net/marketing-portfolio/Real%20printed%20receipts.mp4?sp=r&st=2026-07-15T09:12:52Z&se=2100-07-15T17:27:52Z&spr=https&sv=2026-02-06&sr=b&sig=dN5QcRQejhhe8nPmtFBel7MoRbZ93KqRcfaOK8AyE4w%3D",
+    label: "Receipt printing animation",
+  },
+  notifications: {
+    src: "https://stagingclasspass.blob.core.windows.net/marketing-portfolio/Confirmations%2C%20sent%20automatically.mp4?sp=r&st=2026-07-15T09:13:37Z&se=2100-07-15T17:28:37Z&spr=https&sv=2026-02-06&sr=b&sig=%2F6vfYN3Rvi4Ni%2BbeiWDGiw0TVBuIbN%2FFtJFpDXYfk%2FI%3D",
+    label: "Automatic confirmations animation",
+  },
+  instructors: {
+    src: "https://stagingclasspass.blob.core.windows.net/marketing-portfolio/A%20portal%20for%20every%20instructor.mp4?sp=r&st=2026-07-15T09:14:58Z&se=2100-07-15T17:29:58Z&spr=https&sv=2026-02-06&sr=b&sig=tUuUBhjFuPIgolAVDdqH4Z3Ox6EB%2B2xvSFvOvGuHQ6s%3D",
+    label: "Instructor portal animation",
+  },
+  "multi-institute": {
+    src: "https://stagingclasspass.blob.core.windows.net/marketing-portfolio/Built%20for%20many%20institutes.mp4?sp=r&st=2026-07-15T09:15:29Z&se=2100-07-15T17:30:29Z&spr=https&sv=2026-02-06&sr=b&sig=wd74RAY7X0sV0tsMjF%2FaNP3PUYvF6F7vN3GRZWpo1OE%3D",
+    label: "Multi-institute support animation",
+  },
+};
 
 export type Step = {
   n: number;
