@@ -7,28 +7,6 @@ import { footerNav, site } from "@/lib/content";
 export function Footer() {
   return (
     <footer className="section-ink relative overflow-hidden">
-      {/* CTA band */}
-      <div className="mx-auto w-full max-w-6xl px-5 pt-20 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-ink-line bg-ink-soft/60 p-8 sm:p-10 md:flex-row md:items-center">
-          <div>
-            <h2 className="text-display text-2xl leading-tight sm:text-3xl">
-              Ready to retire the register?
-            </h2>
-            <p className="mt-2 max-w-md text-sm text-muted-foreground">
-              See ClassPass run attendance and fees for your institute. Book a walkthrough — we&apos;ll
-              tailor it to how you teach.
-            </p>
-          </div>
-          <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-            <Cta href="/contact" variant="signal" size="lg" withArrow>
-              Request a demo
-            </Cta>
-            <Cta href="/pricing" variant="outline" size="lg" className="border-ink-line text-paper hover:bg-ink-line/40">
-              See pricing
-            </Cta>
-          </div>
-        </div>
-      </div>
 
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-16 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)] lg:px-8">
         <div className="space-y-4">

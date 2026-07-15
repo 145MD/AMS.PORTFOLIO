@@ -46,7 +46,7 @@ export default function HowItWorksPage() {
           <div className="grid gap-5 md:grid-cols-3">
             {detail.map((d, i) => (
               <Reveal key={d.title} delay={i * 0.07}>
-                <div className="h-full rounded-2xl border border-border bg-card p-6">
+                <div className="h-full rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:border-violet/40 hover:shadow-xl hover:shadow-ink/10 motion-reduce:hover:translate-y-0">
                   <span className="text-display text-sm text-signal-foreground">0{i + 1}</span>
                   <h3 className="text-display mt-2 text-lg">{d.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d.body}</p>

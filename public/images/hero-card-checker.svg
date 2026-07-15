@@ -1,0 +1,64 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="56" fill="#FBFBFC"/>
+  <rect width="1200" height="900" rx="56" fill="url(#grid)" fill-opacity="0.55"/>
+  <circle cx="910" cy="190" r="260" fill="#1D8AF4" fill-opacity="0.12"/>
+  <circle cx="930" cy="210" r="178" stroke="#1D8AF4" stroke-opacity="0.2" stroke-width="3"/>
+  <circle cx="930" cy="210" r="116" stroke="#0C55D0" stroke-opacity="0.18" stroke-width="3"/>
+  <rect x="145" y="94" width="910" height="712" rx="44" fill="#031530"/>
+  <rect x="145" y="94" width="910" height="712" rx="44" fill="url(#panel)" fill-opacity="0.9"/>
+  <rect x="178" y="127" width="844" height="646" rx="30" fill="#FBFBFC"/>
+  <rect x="178" y="127" width="844" height="72" rx="30" fill="#031530"/>
+  <path d="M178 169H1022V230H178V169Z" fill="#031530"/>
+  <text x="222" y="173" fill="#FBFBFC" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="700">Card checker</text>
+  <rect x="824" y="144" width="151" height="34" rx="17" fill="#1D8AF4" fill-opacity="0.16"/>
+  <circle cx="848" cy="161" r="7" fill="#1D8AF4"/>
+  <text x="866" y="169" fill="#1D8AF4" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700">Live scan</text>
+  <rect x="222" y="251" width="756" height="124" rx="31" fill="#F4F8FF"/>
+  <circle cx="282" cy="313" r="38" fill="#031530"/>
+  <path d="M276 299C284 307 284 319 276 327" stroke="#1D8AF4" stroke-width="5" stroke-linecap="round"/>
+  <path d="M267 306C271 310 271 316 267 320" stroke="#1D8AF4" stroke-width="5" stroke-linecap="round"/>
+  <text x="344" y="302" fill="#031530" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="800">Nimasha Perera</text>
+  <text x="344" y="337" fill="#657184" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="500">Physics · Theory · 4:00 PM</text>
+  <rect x="773" y="282" width="161" height="62" rx="31" fill="#1D8AF4"/>
+  <path d="M835 313L851 329L879 296" stroke="#031530" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="222" y="417" width="756" height="94" rx="26" fill="#D9EAFE"/>
+  <text x="264" y="475" fill="#031530" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="800">Marked present</text>
+  <circle cx="914" cy="464" r="30" fill="#1D8AF4"/>
+  <path d="M901 464L912 475L929 453" stroke="#031530" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="222" y="551" width="756" height="94" rx="26" fill="#FFFFFF" stroke="#D7E0ED" stroke-width="2"/>
+  <rect x="262" y="579" width="38" height="38" rx="9" fill="#F4F8FF"/>
+  <path d="M272 589H290M272 598H290M272 607H284" stroke="#657184" stroke-width="4" stroke-linecap="round"/>
+  <text x="325" y="610" fill="#031530" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="800">July tuition</text>
+  <text x="852" y="610" fill="#031530" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="800">Paid</text>
+  <path d="M926 598L936 608L956 584" stroke="#1D8AF4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <g filter="url(#cardShadow)">
+    <rect x="615" y="636" width="368" height="220" rx="34" transform="rotate(-5 615 636)" fill="url(#card)"/>
+    <text x="655" y="694" fill="#FBFBFC" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" transform="rotate(-5 655 694)">ClassPass</text>
+    <path d="M899 665C911 676 912 696 901 709" stroke="#FBFBFC" stroke-width="6" stroke-linecap="round" transform="rotate(-5 899 665)"/>
+    <path d="M879 678C885 684 885 694 879 701" stroke="#FBFBFC" stroke-width="6" stroke-linecap="round" transform="rotate(-5 879 678)"/>
+    <text x="670" y="804" fill="#FBFBFC" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="9" transform="rotate(-5 670 804)">•••• 4471</text>
+  </g>
+  <defs>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#0C55D0" fill-opacity="0.12"/>
+    </pattern>
+    <linearGradient id="panel" x1="145" y1="94" x2="1055" y2="806" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#031530"/>
+      <stop offset="1" stop-color="#0C55D0"/>
+    </linearGradient>
+    <linearGradient id="card" x1="615" y1="636" x2="983" y2="856" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D8AF4"/>
+      <stop offset="1" stop-color="#0C55D0"/>
+    </linearGradient>
+    <filter id="cardShadow" x="575" y="564" width="463" height="338" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="18"/>
+      <feGaussianBlur stdDeviation="18"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0117647 0 0 0 0 0.0823529 0 0 0 0 0.188235 0 0 0 0.28 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_1"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_1" result="shape"/>
+    </filter>
+  </defs>
+</svg>

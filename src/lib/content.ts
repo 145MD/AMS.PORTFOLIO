@@ -24,6 +24,11 @@ export const site = {
   foundedYear: 2026,
 } as const;
 
+export const heroVisual = {
+  imageSrc: "/images/hero-card-checker.svg",
+  imageAlt: "ClassPass card checker attendance and payment interface",
+} as const;
+
 export type NavItem = { label: string; href: string };
 
 export const primaryNav: NavItem[] = [
