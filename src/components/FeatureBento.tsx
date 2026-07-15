@@ -7,34 +7,31 @@ import { features as allFeatures, type Feature } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 function FeatureCard({ feature, large }: { feature: Feature; large?: boolean }) {
-  const accent = feature.accent;
   return (
     <div
       className={cn(
-        "flex h-full flex-col rounded-3xl border p-6 sm:p-7",
-        accent
-          ? "section-ink border-ink-line"
-          : "border-border bg-card",
+        "group flex h-full flex-col rounded-3xl border border-border bg-white p-6 transition-colors duration-300 hover:border-ink hover:bg-ink sm:p-7",
         large && "sm:col-span-2",
       )}
     >
       <div
         className={cn(
-          "grid size-11 place-items-center rounded-xl",
-          accent ? "bg-signal text-signal-foreground" : "bg-ink text-signal",
+          "grid size-11 place-items-center rounded-xl bg-ink text-signal transition-colors duration-300 group-hover:bg-signal group-hover:text-signal-foreground",
         )}
       >
         {createElement(getIcon(feature.icon), { className: "size-5" })}
       </div>
-      <h3 className="text-display mt-5 text-xl">{feature.title}</h3>
-      <p className={cn("mt-2 text-sm leading-relaxed", "text-muted-foreground")}>
+      <h3 className="text-display mt-5 text-xl transition-colors duration-300 group-hover:text-paper">
+        {feature.title}
+      </h3>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground transition-colors duration-300 group-hover:text-paper/70">
         {feature.summary}
       </p>
-      <ul className="mt-5 space-y-2 border-t border-border pt-5">
+      <ul className="mt-5 space-y-2 border-t border-border pt-5 transition-colors duration-300 group-hover:border-ink-line">
         {feature.points.map((p) => (
           <li key={p} className="flex items-start gap-2.5 text-sm">
-            <Check className={cn("mt-0.5 size-4 shrink-0", accent ? "text-signal" : "text-violet")} />
-            <span className={accent ? "text-paper/90" : "text-foreground"}>{p}</span>
+            <Check className="mt-0.5 size-4 shrink-0 text-violet transition-colors duration-300 group-hover:text-signal" />
+            <span className="transition-colors duration-300 group-hover:text-paper/90">{p}</span>
           </li>
         ))}
       </ul>

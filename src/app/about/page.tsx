@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Target, Feather, ShieldCheck, Sparkles } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Section, Container, SectionHeading } from "@/components/primitives";
@@ -46,29 +47,68 @@ export default function AboutPage() {
 
       <Section>
         <Container>
-          <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+          <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
             <Reveal>
-              <h2 className="text-display text-2xl sm:text-3xl">Our story</h2>
+              <div>
+                <h2 className="text-display text-2xl sm:text-3xl">Our story</h2>
+                <div className="mt-5 space-y-5 text-muted-foreground">
+                  <p>
+                    {site.name} started from a familiar frustration: classes beginning late because
+                    of roll call, and month-ends spent reconciling a fee book nobody fully trusted.
+                    The information existed — it was just trapped on paper.
+                  </p>
+                  <p>
+                    So we built the smallest thing that fixes it. A student taps an NFC card at the
+                    door and attendance is marked for the right session. If they owe a fee, staff take
+                    the payment on the same tap, print a receipt, and a confirmation goes to the parent
+                    automatically.
+                  </p>
+                  <p>
+                    Around that core we added what institutes actually need next — an instructor portal
+                    scoped to only what each person teaches, revenue-share earnings, and a branded
+                    subdomain for every institute on one shared platform.
+                  </p>
+                </div>
+              </div>
             </Reveal>
             <Reveal delay={0.08}>
-              <div className="space-y-5 text-muted-foreground">
-                <p>
-                  {site.name} started from a familiar frustration: classes beginning late because
-                  of roll call, and month-ends spent reconciling a fee book nobody fully trusted.
-                  The information existed — it was just trapped on paper.
-                </p>
-                <p>
-                  So we built the smallest thing that fixes it. A student taps an NFC card at the
-                  door and attendance is marked for the right session. If they owe a fee, staff take
-                  the payment on the same tap, print a receipt, and a confirmation goes to the parent
-                  automatically.
-                </p>
-                <p>
-                  Around that core we added what institutes actually need next — an instructor portal
-                  scoped to only what each person teaches, revenue-share earnings, and a branded
-                  subdomain for every institute on one shared platform.
-                </p>
-              </div>
+              <figure className="group relative">
+                <div
+                  className="absolute inset-0 translate-x-3 translate-y-3 rounded-[2rem] border border-border bg-ink/5"
+                  aria-hidden
+                />
+                <div className="relative overflow-hidden rounded-[2rem] border border-border bg-white p-2 shadow-xl shadow-ink/10 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-violet/30 hover:shadow-2xl hover:shadow-ink/15 motion-reduce:hover:translate-y-0">
+                  <div className="relative overflow-hidden rounded-[1.45rem] bg-ink">
+                    <Image
+                      src="/about2.png"
+                      alt="ClassPass transforming paper attendance and fee books into NFC attendance, payments, receipts and dashboards"
+                      width={1693}
+                      height={929}
+                      sizes="(min-width: 1024px) 52vw, 100vw"
+                      className="h-auto w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02] motion-reduce:group-hover:scale-100"
+                    />
+                    <div className="pointer-events-none absolute inset-x-0 top-0 flex items-center justify-between gap-3 p-4">
+                      <span className="rounded-full border border-white/15 bg-ink/70 px-3 py-1 text-xs font-medium text-paper shadow-sm backdrop-blur">
+                        Paper to platform
+                      </span>
+                      <span className="rounded-full bg-signal px-3 py-1 text-white text-xs font-semibold text-signal-foreground shadow-sm shadow-signal/30">
+                        NFC workflow
+                      </span>
+                    </div>
+                  </div>
+                  <figcaption className="grid gap-2 px-2 pb-2 pt-3 text-xs font-medium text-muted-foreground sm:grid-cols-3">
+                    <span className="rounded-xl text-center bg-muted px-3 py-2 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-ink hover:text-paper hover:shadow-sm motion-reduce:hover:translate-y-0">
+                      Attendance
+                    </span>
+                    <span className="rounded-xl text-center bg-muted px-3 py-2 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-ink hover:text-paper hover:shadow-sm motion-reduce:hover:translate-y-0">
+                      Payments
+                    </span>
+                    <span className="rounded-xl text-center bg-muted px-3 py-2 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-ink hover:text-paper hover:shadow-sm motion-reduce:hover:translate-y-0">
+                      Receipts
+                    </span>
+                  </figcaption>
+                </div>
+              </figure>
             </Reveal>
           </div>
         </Container>

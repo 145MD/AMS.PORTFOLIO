@@ -5,8 +5,9 @@ import { Section, Container, Cta } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
 import { RoleCards } from "@/components/RoleCards";
 import { CtaSection } from "@/components/CtaSection";
+import { FeatureVideo } from "@/components/FeatureVideo";
 import { getIcon } from "@/lib/icons";
-import { features } from "@/lib/content";
+import { features, featureVideos } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -56,12 +57,12 @@ export default function FeaturesPage() {
 
                     <div className={cn("relative", flip && "lg:order-1")}>
                       <div className="aspect-[4/3] overflow-hidden rounded-3xl border border-border bg-muted/60">
-                        <div className="flex h-full flex-col items-center justify-center gap-3 bg-grid p-8 text-muted-foreground/40">
-                          <Icon className="size-16 text-violet/40" />
-                          <span className="font-mono text-xs uppercase tracking-widest">
-                            {f.id}
-                          </span>
-                        </div>
+                        <FeatureVideo
+                          id={f.id}
+                          title={f.title}
+                          Icon={Icon}
+                          video={featureVideos[f.id]}
+                        />
                       </div>
                     </div>
                   </div>
