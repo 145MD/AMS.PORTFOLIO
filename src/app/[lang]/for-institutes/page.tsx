@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
 import { Section, Container, SectionHeading } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
@@ -6,20 +7,32 @@ import { FeatureBento } from "@/components/FeatureBento";
 import { HowItWorksSteps } from "@/components/HowItWorksSteps";
 import { CtaSection } from "@/components/CtaSection";
 import { getIcon } from "@/lib/icons";
-import { audiences, features } from "@/lib/content";
+import { hasLocale, locales } from "@/lib/i18n";
+import { getContent } from "@/lib/localized-content";
 
-const audience = audiences.find((a) => a.id === "institutes")!;
-const subset = features.filter((f) =>
-  ["attendance", "fees", "receipts", "notifications"].includes(f.id),
-);
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
 
-export const metadata: Metadata = {
-  title: "For institutes",
-  description:
-    "Run attendance and fee collection from one screen. ClassPass gives institute owners and admins a paperless register, a live fee ledger and a branded subdomain.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/for-institutes">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  return getContent(lang).pages.institutes.metadata;
+}
 
-export default function ForInstitutesPage() {
+export default async function ForInstitutesPage({ params }: PageProps<"/[lang]/for-institutes">) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+
+  const content = getContent(lang);
+  const page = content.pages.institutes;
+  const audience = content.audiences.find((a) => a.id === "institutes")!;
+  const subset = content.features.filter((f) =>
+    ["attendance", "fees", "receipts", "notifications"].includes(f.id),
+  );
+
   return (
     <>
       <PageHero eyebrow={audience.eyebrow} title={audience.title} description={audience.body} />
@@ -49,17 +62,17 @@ export default function ForInstitutesPage() {
 
       <Section tone="muted">
         <Container>
-          <SectionHeading eyebrow="What runs the desk" title="The capabilities you'll use daily" className="mb-14" />
+          <SectionHeading eyebrow={page.featuresHeading.eyebrow} title={page.featuresHeading.title} className="mb-14" />
         </Container>
-        <FeatureBento heading={false} features={subset} />
+        <FeatureBento heading={false} features={subset} content={content} />
       </Section>
 
       <Section>
-        <HowItWorksSteps />
+        <HowItWorksSteps content={content} />
       </Section>
 
       <Section className="pt-0">
-        <CtaSection title="Ready to go paperless?" />
+        <CtaSection locale={lang} content={content} title={page.ctaTitle} />
       </Section>
     </>
   );

@@ -1,8 +1,17 @@
 import { Container, Cta, GradientText } from "@/components/primitives";
 import { TapCard } from "@/components/TapCard";
-import { site } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
+import type { MarketingContent } from "@/lib/localized-content";
 
-export function Hero() {
+export function Hero({
+  locale,
+  content,
+}: {
+  locale: Locale;
+  content: MarketingContent;
+}) {
+  const hero = content.components.hero;
+
   return (
     <section className="section-ink relative overflow-hidden">
       {/* ambient glows + grid */}
@@ -24,39 +33,39 @@ export function Hero() {
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-signal opacity-70" />
                 <span className="relative inline-flex size-2 rounded-full bg-signal" />
               </span>
-              Built for tuition institutes in Sri Lanka
+              {hero.eyebrow}
             </span>
 
             <h1 className="text-display mt-6 text-4xl leading-[1.03] text-balance text-paper sm:text-5xl lg:text-6xl">
-              Attendance and fees, <GradientText>settled with a tap</GradientText>.
+              {hero.title} <GradientText>{hero.highlight}</GradientText>.
             </h1>
 
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
-              {site.name} turns an NFC card tap into marked attendance, a recorded payment, a
-              printed receipt and an SMS to the parent — for every student, every class.
+              {hero.description}
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Cta href="/contact" variant="signal" size="lg" withArrow>
-                Request a demo
+              <Cta href="/contact" locale={locale} variant="signal" size="lg" withArrow>
+                {hero.primaryCta}
               </Cta>
               <Cta
                 href="/how-it-works"
+                locale={locale}
                 variant="outline"
                 size="lg"
                 className="border-ink-line text-paper hover:bg-ink-line/40"
               >
-                See how it works
+                {hero.secondaryCta}
               </Cta>
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground">
-              No student app to install · Works on any NFC phone · Your own subdomain
+              {hero.trustLine}
             </p>
           </div>
 
           <div className="relative">
-            <TapCard />
+            <TapCard content={content.components.tapCard} />
           </div>
         </div>
       </Container>

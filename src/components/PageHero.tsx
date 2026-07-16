@@ -8,7 +8,7 @@ export function PageHero({
   description,
   ripple = true,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: React.ReactNode;
   description?: React.ReactNode;
   ripple?: boolean;
@@ -27,7 +27,7 @@ export function PageHero({
       />
       <Container className="relative">
         <div className="max-w-2xl py-16 sm:py-20">
-          <Eyebrow className="text-paper/70">{eyebrow}</Eyebrow>
+          {eyebrow && <Eyebrow className="text-paper/70">{eyebrow}</Eyebrow>}
           <h1 className="text-display mt-4 text-4xl leading-[1.05] text-balance text-paper sm:text-5xl">
             {title}
           </h1>

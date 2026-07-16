@@ -1,13 +1,21 @@
 import { Container, Cta } from "@/components/primitives";
 import { NfcRipple } from "@/components/NfcRipple";
+import type { Locale } from "@/lib/i18n";
+import type { MarketingContent } from "@/lib/localized-content";
 
 export function CtaSection({
-  title = "Bring the tap to your institute",
-  description = "A short walkthrough is the fastest way to see it. We'll set it up around your classes and fees.",
+  locale,
+  content,
+  title,
+  description,
 }: {
+  locale: Locale;
+  content: MarketingContent;
   title?: string;
   description?: string;
 }) {
+  const copy = content.components.cta;
+
   return (
     <Container>
       <div className="section-ink relative overflow-hidden rounded-[2rem] border border-ink-line px-6 py-16 text-center sm:px-10 sm:py-20">
@@ -17,19 +25,20 @@ export function CtaSection({
           aria-hidden
         />
         <div className="relative mx-auto max-w-xl">
-          <h2 className="text-display text-3xl leading-tight text-balance sm:text-4xl">{title}</h2>
-          <p className="mt-4 text-muted-foreground">{description}</p>
+          <h2 className="text-display text-3xl leading-tight text-balance sm:text-4xl">{title ?? copy.title}</h2>
+          <p className="mt-4 text-muted-foreground">{description ?? copy.description}</p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Cta href="/contact" variant="signal" size="lg" withArrow>
-              Request a demo
+            <Cta href="/contact" locale={locale} variant="signal" size="lg" withArrow>
+              {copy.primary}
             </Cta>
             <Cta
               href="/pricing"
+              locale={locale}
               variant="outline"
               size="lg"
               className="border-ink-line text-paper hover:bg-ink-line/40"
             >
-              See pricing
+              {copy.secondary}
             </Cta>
           </div>
         </div>

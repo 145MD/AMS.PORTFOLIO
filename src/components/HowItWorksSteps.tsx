@@ -1,16 +1,24 @@
 import { Container, SectionHeading } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
 import { getIcon } from "@/lib/icons";
-import { steps } from "@/lib/content";
+import type { MarketingContent } from "@/lib/localized-content";
 
-export function HowItWorksSteps({ heading = true }: { heading?: boolean }) {
+export function HowItWorksSteps({
+  heading = true,
+  content,
+}: {
+  heading?: boolean;
+  content: MarketingContent;
+}) {
+  const copy = content.components.howItWorks;
+
   return (
     <Container>
       {heading && (
         <SectionHeading
-          eyebrow="How it works"
-          title="Four beats, one tap"
-          description="No workflow to learn. The card does the work; the record keeps itself."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          description={copy.description}
           className="mb-14"
         />
       )}
@@ -21,7 +29,7 @@ export function HowItWorksSteps({ heading = true }: { heading?: boolean }) {
           className="pointer-events-none absolute left-0 right-0 top-[2.15rem] hidden h-px bg-border md:block"
           aria-hidden
         />
-        {steps.map((step, i) => {
+        {content.steps.map((step, i) => {
           const Icon = getIcon(step.icon);
           return (
             <Reveal as="li" key={step.n} delay={i * 0.08} className="relative">

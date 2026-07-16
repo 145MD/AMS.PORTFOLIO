@@ -1,13 +1,20 @@
 import { Container, Cta, Eyebrow } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
 import { getIcon } from "@/lib/icons";
-import { audiences } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
+import type { MarketingContent } from "@/lib/localized-content";
 
-export function AudienceSplit() {
+export function AudienceSplit({
+  locale,
+  content,
+}: {
+  locale: Locale;
+  content: MarketingContent;
+}) {
   return (
     <Container>
       <div className="grid gap-5 lg:grid-cols-2">
-        {audiences.map((a, idx) => (
+        {content.audiences.map((a, idx) => (
           <Reveal key={a.id} delay={idx * 0.08}>
             <div className="flex h-full flex-col rounded-3xl border border-border bg-card p-8 sm:p-10">
               <Eyebrow>{a.eyebrow}</Eyebrow>
@@ -32,8 +39,8 @@ export function AudienceSplit() {
               </div>
 
               <div className="mt-8 pt-2">
-                <Cta href={a.href} variant="ghost" size="md" withArrow className="px-0 hover:bg-transparent hover:underline">
-                  Learn more
+                <Cta href={a.href} locale={locale} variant="ghost" size="md" withArrow className="px-0 hover:bg-transparent hover:underline">
+                  {content.common.learnMore}
                 </Cta>
               </div>
             </div>

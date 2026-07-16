@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { localizePath, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 /** Max-width page gutter. */
@@ -122,6 +123,7 @@ export function GradientText({
 type CtaProps = {
   href: string;
   children: React.ReactNode;
+  locale?: Locale;
   variant?: "primary" | "signal" | "outline" | "ghost";
   size?: "md" | "lg";
   className?: string;
@@ -155,6 +157,7 @@ function isExternal(href: string) {
 export function Cta({
   href,
   children,
+  locale,
   variant = "primary",
   size = "md",
   className,
@@ -171,11 +174,13 @@ export function Cta({
     </>
   );
 
-  if (isExternal(href)) {
-    const external = /^https?:\/\//.test(href);
+  const resolvedHref = locale ? localizePath(href, locale) : href;
+
+  if (isExternal(resolvedHref)) {
+    const external = /^https?:\/\//.test(resolvedHref);
     return (
       <a
-        href={href}
+        href={resolvedHref}
         className={classes}
         onClick={onClick}
         {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
@@ -186,7 +191,7 @@ export function Cta({
   }
 
   return (
-    <Link href={href} className={classes} onClick={onClick}>
+    <Link href={resolvedHref} className={classes} onClick={onClick}>
       {inner}
     </Link>
   );
