@@ -3,19 +3,19 @@
 import { useState } from "react";
 import { Check, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { site } from "@/lib/content";
+import type { MarketingContent } from "@/lib/localized-content";
 
 type Fields = { name: string; institute: string; email: string; message: string };
 type Errors = Partial<Record<keyof Fields, string>>;
 
 const empty: Fields = { name: "", institute: "", email: "", message: "" };
 
-function validate(f: Fields): Errors {
+function validate(f: Fields, copy: MarketingContent["components"]["contactForm"]): Errors {
   const e: Errors = {};
-  if (!f.name.trim()) e.name = "Please tell us your name.";
-  if (!f.email.trim()) e.email = "We need an email to reply to.";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = "That email doesn't look right.";
-  if (!f.message.trim()) e.message = "Add a short note so we can help.";
+  if (!f.name.trim()) e.name = copy.errors.name;
+  if (!f.email.trim()) e.email = copy.errors.emailRequired;
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = copy.errors.emailInvalid;
+  if (!f.message.trim()) e.message = copy.errors.message;
   return e;
 }
 
@@ -25,7 +25,12 @@ const fieldClass = (invalid?: boolean) =>
     invalid ? "border-destructive focus-visible:ring-destructive/25" : "border-input focus-visible:border-violet",
   );
 
-export function ContactForm() {
+export function ContactForm({
+  content,
+}: {
+  content: MarketingContent;
+}) {
+  const copy = content.components.contactForm;
   const [fields, setFields] = useState<Fields>(empty);
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState(false);
@@ -37,15 +42,15 @@ export function ContactForm() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const found = validate(fields);
+    const found = validate(fields, copy);
     setErrors(found);
     if (Object.keys(found).length) return;
 
-    const subject = encodeURIComponent(`Demo request — ${fields.institute || fields.name}`);
+    const subject = encodeURIComponent(`${copy.mailSubjectPrefix} — ${fields.institute || fields.name}`);
     const body = encodeURIComponent(
-      `Name: ${fields.name}\nInstitute: ${fields.institute || "—"}\nEmail: ${fields.email}\n\n${fields.message}`,
+      `Name: ${fields.name}\nInstitute: ${fields.institute || copy.mailInstituteFallback}\nEmail: ${fields.email}\n\n${fields.message}`,
     );
-    window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${content.site.email}?subject=${subject}&body=${body}`;
     setSent(true);
   };
 
@@ -55,11 +60,11 @@ export function ContactForm() {
         <div className="grid size-12 place-items-center rounded-full bg-signal/20 text-signal-foreground">
           <Check className="size-6" strokeWidth={3} />
         </div>
-        <h3 className="text-display mt-4 text-xl">Thanks — your email is ready</h3>
+        <h3 className="text-display mt-4 text-xl">{copy.successTitle}</h3>
         <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-          Your mail app should have opened with the details filled in. If it didn&apos;t, write to us at{" "}
-          <a href={`mailto:${site.email}`} className="font-medium text-foreground underline underline-offset-4">
-            {site.email}
+          {copy.successBody}{" "}
+          <a href={`mailto:${content.site.email}`} className="font-medium text-foreground underline underline-offset-4">
+            {content.site.email}
           </a>
           .
         </p>
@@ -71,7 +76,7 @@ export function ContactForm() {
           }}
           className="mt-6 text-sm font-medium text-violet underline-offset-4 hover:underline"
         >
-          Send another
+          {copy.sendAnother}
         </button>
       </div>
     );
@@ -82,7 +87,7 @@ export function ContactForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="mb-1.5 block text-sm font-medium">
-            Your name
+            {copy.fields.name}
           </label>
           <input
             id="name"
@@ -90,27 +95,27 @@ export function ContactForm() {
             onChange={set("name")}
             aria-invalid={!!errors.name}
             className={fieldClass(!!errors.name)}
-            placeholder="Kavindu Silva"
+            placeholder={copy.placeholders.name}
           />
           {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
         </div>
         <div>
           <label htmlFor="institute" className="mb-1.5 block text-sm font-medium">
-            Institute <span className="text-muted-foreground">(optional)</span>
+            {copy.fields.institute} <span className="text-muted-foreground">({copy.fields.optional})</span>
           </label>
           <input
             id="institute"
             value={fields.institute}
             onChange={set("institute")}
             className={fieldClass()}
-            placeholder="Royal Academy"
+            placeholder={copy.placeholders.institute}
           />
         </div>
       </div>
 
       <div className="mt-4">
         <label htmlFor="email" className="mb-1.5 block text-sm font-medium">
-          Email
+          {copy.fields.email}
         </label>
         <input
           id="email"
@@ -119,14 +124,14 @@ export function ContactForm() {
           onChange={set("email")}
           aria-invalid={!!errors.email}
           className={fieldClass(!!errors.email)}
-          placeholder="you@institute.lk"
+          placeholder={copy.placeholders.email}
         />
         {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
       </div>
 
       <div className="mt-4">
         <label htmlFor="message" className="mb-1.5 block text-sm font-medium">
-          How can we help?
+          {copy.fields.message}
         </label>
         <textarea
           id="message"
@@ -135,7 +140,7 @@ export function ContactForm() {
           onChange={set("message")}
           aria-invalid={!!errors.message}
           className={cn(fieldClass(!!errors.message), "resize-y")}
-          placeholder="We run 12 classes and want to move off paper attendance and fee books…"
+          placeholder={copy.placeholders.message}
         />
         {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
       </div>
@@ -145,13 +150,13 @@ export function ContactForm() {
           type="submit"
           className="group inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink px-6 text-sm font-medium text-paper outline-none transition-all hover:bg-ink/90 focus-visible:ring-3 focus-visible:ring-violet/50"
         >
-          Send request
+          {copy.sendRequest}
           <Send className="size-4 transition-transform group-hover:translate-x-0.5" />
         </button>
         <p className="text-xs text-muted-foreground">
-          Prefer email? Write to{" "}
-          <a href={`mailto:${site.email}`} className="font-medium text-foreground underline underline-offset-4">
-            {site.email}
+          {copy.preferEmail}{" "}
+          <a href={`mailto:${content.site.email}`} className="font-medium text-foreground underline underline-offset-4">
+            {content.site.email}
           </a>
         </p>
       </div>

@@ -3,12 +3,17 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Check, Nfc, ReceiptText } from "lucide-react";
 import { NfcRipple } from "@/components/NfcRipple";
+import type { MarketingContent } from "@/lib/localized-content";
 
 /**
  * Hero visual: the card-checker app mid-tap — student marked present and fee paid —
  * with the signature NFC ripple pinging behind it and an NFC card tucked below.
  */
-export function TapCard() {
+export function TapCard({
+  content,
+}: {
+  content: MarketingContent["components"]["tapCard"];
+}) {
   const reduce = useReducedMotion();
 
   return (
@@ -26,9 +31,9 @@ export function TapCard() {
           <div className="overflow-hidden rounded-[1.5rem] bg-paper">
             {/* app header */}
             <div className="flex items-center justify-between bg-ink px-4 py-3 text-paper">
-              <span className="text-xs font-semibold tracking-wide">Card checker</span>
+              <span className="text-xs font-semibold tracking-wide">{content.header}</span>
               <span className="inline-flex items-center gap-1 rounded-full bg-signal/15 px-2 py-0.5 text-[10px] font-medium text-signal">
-                <span className="size-1.5 rounded-full bg-signal" /> Live
+                <span className="size-1.5 rounded-full bg-signal" /> {content.live}
               </span>
             </div>
 
@@ -39,8 +44,8 @@ export function TapCard() {
                   <Nfc className="size-5" />
                 </div>
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold">Nimasha Perera</p>
-                  <p className="truncate text-xs text-muted-foreground">Physics · Theory · 4:00 PM</p>
+                  <p className="truncate text-sm font-semibold">{content.studentName}</p>
+                  <p className="truncate text-xs text-muted-foreground">{content.classLine}</p>
                 </div>
               </div>
 
@@ -50,7 +55,7 @@ export function TapCard() {
                 animate={reduce ? undefined : { scale: [0.96, 1, 0.96], opacity: [0.6, 1, 0.6] }}
                 transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
               >
-                <span className="text-sm font-semibold text-signal-foreground">Marked present</span>
+                <span className="text-sm font-semibold text-signal-foreground">{content.markedPresent}</span>
                 <span className="grid size-6 place-items-center rounded-full bg-signal text-signal-foreground">
                   <Check className="size-4" strokeWidth={3} />
                 </span>
@@ -59,9 +64,9 @@ export function TapCard() {
               <div className="flex items-center justify-between rounded-xl border border-border px-3 py-2.5">
                 <span className="flex items-center gap-2 text-sm font-medium">
                   <ReceiptText className="size-4 text-muted-foreground" />
-                  July tuition
+                  {content.fee}
                 </span>
-                <span className="font-mono text-sm font-semibold">Paid ✓</span>
+                <span className="font-mono text-sm font-semibold">{content.paid} ✓</span>
               </div>
             </div>
           </div>

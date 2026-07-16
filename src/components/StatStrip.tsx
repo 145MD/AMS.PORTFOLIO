@@ -1,8 +1,8 @@
 import { Container } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
-import { stats } from "@/lib/content";
+import type { MarketingContent } from "@/lib/localized-content";
 
-export function StatStrip() {
+export function StatStrip({ stats }: { stats: MarketingContent["stats"] }) {
   return (
     <div className="border-y border-border bg-background">
       <Container>

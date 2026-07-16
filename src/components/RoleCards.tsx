@@ -1,21 +1,29 @@
 import { Container, SectionHeading } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
 import { getIcon } from "@/lib/icons";
-import { roles } from "@/lib/content";
+import type { MarketingContent } from "@/lib/localized-content";
 
-export function RoleCards({ heading = true }: { heading?: boolean }) {
+export function RoleCards({
+  heading = true,
+  content,
+}: {
+  heading?: boolean;
+  content: MarketingContent;
+}) {
+  const copy = content.components.roles;
+
   return (
     <Container>
       {heading && (
         <SectionHeading
-          eyebrow="Role-based by design"
-          title="Everyone sees exactly their slice"
-          description="Access is granted per role and scoped per institute. No one sees more than their job needs."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          description={copy.description}
           className="mb-14"
         />
       )}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {roles.map((role, i) => {
+        {content.roles.map((role, i) => {
           const Icon = getIcon(role.icon);
           return (
             <Reveal key={role.name} delay={(i % 3) * 0.06}>

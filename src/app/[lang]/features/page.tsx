@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Check, ShieldCheck } from "lucide-react";
+import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
 import { Section, Container, Cta } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
@@ -7,28 +8,41 @@ import { RoleCards } from "@/components/RoleCards";
 import { CtaSection } from "@/components/CtaSection";
 import { FeatureVideo } from "@/components/FeatureVideo";
 import { getIcon } from "@/lib/icons";
-import { features, featureVideos } from "@/lib/content";
+import { hasLocale, locales } from "@/lib/i18n";
+import { getContent } from "@/lib/localized-content";
 import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "Features",
-  description:
-    "NFC attendance, fee collection, thermal receipts, SMS confirmations, an instructor portal and multi-institute support — the full ClassPass feature set.",
-};
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
 
-export default function FeaturesPage() {
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/features">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  return getContent(lang).pages.features.metadata;
+}
+
+export default async function FeaturesPage({ params }: PageProps<"/[lang]/features">) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+
+  const content = getContent(lang);
+  const page = content.pages.features;
+
   return (
     <>
       <PageHero
-        eyebrow="Features"
-        title="The whole institute, one tap at a time"
-        description="Each capability is built to hand off to the next — a tap becomes attendance, attendance meets fees, fees produce receipts and confirmations."
+        eyebrow={page.hero.eyebrow}
+        title={page.hero.title}
+        description={page.hero.description}
       />
 
       <Section>
         <Container>
           <div className="flex flex-col gap-20">
-            {features.map((f, i) => {
+            {content.features.map((f, i) => {
               const Icon = getIcon(f.icon);
               const flip = i % 2 === 1;
               return (
@@ -61,7 +75,7 @@ export default function FeaturesPage() {
                           id={f.id}
                           title={f.title}
                           Icon={Icon}
-                          video={featureVideos[f.id]}
+                          video={content.featureVideos[f.id]}
                         />
                       </div>
                     </div>
@@ -74,7 +88,7 @@ export default function FeaturesPage() {
       </Section>
 
       <Section tone="muted">
-        <RoleCards />
+        <RoleCards content={content} />
       </Section>
 
       <Section>
@@ -84,21 +98,20 @@ export default function FeaturesPage() {
               <ShieldCheck className="size-6" />
             </div>
             <div className="flex-1">
-              <h2 className="text-display text-xl sm:text-2xl">Secure and isolated by default</h2>
+              <h2 className="text-display text-xl sm:text-2xl">{page.security.title}</h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Permission-based access per role, data logically isolated per institute, and
-                soft-deletes with a full audit trail rather than hard erasure.
+                {page.security.description}
               </p>
             </div>
-            <Cta href="/how-it-works" variant="signal" withArrow>
-              See the flow
+            <Cta href="/how-it-works" locale={lang} variant="signal" withArrow>
+              {page.security.cta}
             </Cta>
           </div>
         </Container>
       </Section>
 
       <Section className="pt-0">
-        <CtaSection />
+        <CtaSection locale={lang} content={content} />
       </Section>
     </>
   );

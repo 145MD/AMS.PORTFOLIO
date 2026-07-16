@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
-import { posts, site } from "@/lib/content";
+import { locales } from "@/lib/i18n";
+import { getContent } from "@/lib/localized-content";
+import { site } from "@/lib/content";
 
 export const dynamic = "force-static";
 
@@ -20,19 +22,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/blog", priority: 0.6, changeFrequency: "weekly" },
   ];
 
-  const staticEntries: MetadataRoute.Sitemap = routes.map((r) => ({
-    url: `${base}${r.path}`,
-    lastModified: now,
-    changeFrequency: r.changeFrequency,
-    priority: r.priority,
-  }));
+  const staticEntries: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    routes.map((r) => ({
+      url: `${base}/${locale}${r.path === "/" ? "" : r.path}`,
+      lastModified: now,
+      changeFrequency: r.changeFrequency,
+      priority: r.priority,
+    })),
+  );
 
-  const postEntries: MetadataRoute.Sitemap = posts.map((p) => ({
-    url: `${base}/blog/${p.slug}`,
-    lastModified: new Date(p.date),
-    changeFrequency: "yearly",
-    priority: 0.5,
-  }));
+  const postEntries: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    getContent(locale).posts.map((p) => ({
+      url: `${base}/${locale}/blog/${p.slug}`,
+      lastModified: new Date(p.date),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    })),
+  );
 
   return [...staticEntries, ...postEntries];
 }

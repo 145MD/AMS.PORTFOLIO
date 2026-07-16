@@ -1,31 +1,29 @@
 import { Check, MessageSquareText, Printer } from "lucide-react";
 import { Container, Cta, SectionHeading } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
-import { site } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
+import type { MarketingContent } from "@/lib/localized-content";
 
-const receiptLines: { label: string; value: string }[] = [
-  { label: "Student", value: "Nimasha Perera" },
-  { label: "Class", value: "Physics · Theory" },
-  { label: "Fee", value: "July tuition" },
-  { label: "Method", value: "Cash" },
-];
+export function ReceiptShowcase({
+  locale,
+  content,
+}: {
+  locale: Locale;
+  content: MarketingContent;
+}) {
+  const copy = content.components.receipts;
 
-export function ReceiptShowcase() {
   return (
     <Container>
       <div className="grid items-center gap-12 lg:grid-cols-2">
         <Reveal>
           <SectionHeading
-            eyebrow="Receipts & confirmations"
-            title="A printed receipt now, an SMS in seconds"
-            description="Take the payment, print a thermal receipt on the spot, and let the confirmation reach the parent on its own. 58mm or 80mm, over WiFi, Bluetooth or USB."
+            eyebrow={copy.eyebrow}
+            title={copy.title}
+            description={copy.description}
           />
           <ul className="mt-8 space-y-3">
-            {[
-              "Configure exactly what prints per institute",
-              "Prepaid SMS wallet — you fund only what you send",
-              "Automatic refund if a message can't be delivered",
-            ].map((t) => (
+            {copy.bullets.map((t) => (
               <li key={t} className="flex items-start gap-3 text-sm">
                 <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-signal/20 text-signal-foreground">
                   <Check className="size-3.5" strokeWidth={3} />
@@ -35,8 +33,8 @@ export function ReceiptShowcase() {
             ))}
           </ul>
           <div className="mt-9">
-            <Cta href="/features#receipts" variant="primary" withArrow>
-              Explore receipts
+            <Cta href="/features#receipts" locale={locale} variant="primary" withArrow>
+              {copy.cta}
             </Cta>
           </div>
         </Reveal>
@@ -46,12 +44,12 @@ export function ReceiptShowcase() {
             {/* thermal receipt */}
             <div className="receipt-edge rounded-md bg-white p-6 pl-8 font-mono text-[13px] leading-relaxed text-neutral-800 shadow-2xl shadow-black/10 ring-1 ring-black/5">
               <div className="flex items-center justify-between border-b border-dashed border-neutral-300 pb-3">
-                <span className="text-sm font-semibold tracking-tight">{site.name}</span>
+                <span className="text-sm font-semibold tracking-tight">{content.site.name}</span>
                 <Printer className="size-4 text-neutral-400" />
               </div>
-              <p className="mt-3 text-[11px] uppercase tracking-widest text-neutral-400">Fee receipt</p>
+              <p className="mt-3 text-[11px] uppercase tracking-widest text-neutral-400">{copy.receiptTitle}</p>
               <dl className="mt-3 space-y-1.5">
-                {receiptLines.map((l) => (
+                {copy.receiptLines.map((l) => (
                   <div key={l.label} className="flex justify-between gap-4">
                     <dt className="text-neutral-400">{l.label}</dt>
                     <dd className="text-right">{l.value}</dd>
@@ -59,11 +57,11 @@ export function ReceiptShowcase() {
                 ))}
               </dl>
               <div className="mt-3 flex justify-between border-t border-dashed border-neutral-300 pt-3 text-base font-semibold">
-                <span>Total</span>
+                <span>{copy.total}</span>
                 <span>LKR 2,500.00</span>
               </div>
               <p className="mt-4 text-center text-[11px] text-neutral-400">
-                Thank you · {site.domain}
+                {copy.thankYou} · {content.site.domain}
               </p>
             </div>
 
@@ -71,10 +69,10 @@ export function ReceiptShowcase() {
             <div className="absolute -bottom-6 -right-2 w-60 rounded-2xl rounded-br-sm border border-border bg-card p-3.5 shadow-xl shadow-black/10 sm:-right-6">
               <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground">
                 <MessageSquareText className="size-3.5 text-signal-foreground" />
-                SMS · to parent
+                {copy.smsLabel}
               </div>
               <p className="mt-1.5 text-sm leading-snug">
-                Payment received: LKR 2,500 for July tuition. Thank you — {site.name}.
+                {copy.smsText}
               </p>
             </div>
           </div>

@@ -8,9 +8,28 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LogoMark } from "@/components/LogoMark";
 import { Cta } from "@/components/primitives";
-import { primaryNav, site } from "@/lib/content";
+import {
+  getPathWithoutLocale,
+  localeLabels,
+  localeToggleLabels,
+  locales,
+  localizePath,
+  switchLocalePath,
+  type Locale,
+} from "@/lib/i18n";
+import type { MarketingContent } from "@/lib/localized-content";
 
-export function Navbar() {
+export function Navbar({
+  locale,
+  nav,
+  site,
+  labels,
+}: {
+  locale: Locale;
+  nav: MarketingContent["primaryNav"];
+  site: MarketingContent["site"];
+  labels: MarketingContent["common"];
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -23,9 +42,10 @@ export function Navbar() {
   }, []);
 
   const closeMenu = () => setOpen(false);
+  const pathWithoutLocale = getPathWithoutLocale(pathname);
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    href === "/" ? pathWithoutLocale === "/" : pathWithoutLocale.startsWith(href);
 
   return (
     <header
@@ -38,18 +58,18 @@ export function Navbar() {
     >
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 sm:px-6 lg:px-8">
         <Link
-          href="/"
-          aria-label={`${site.name} home`}
+          href={localizePath("/", locale)}
+          aria-label={labels.homeAria}
           className="rounded-lg outline-none focus-visible:ring-3 focus-visible:ring-violet/50"
         >
           <LogoMark />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
-          {primaryNav.map((item) => (
+          {nav.map((item) => (
             <Link
               key={item.href}
-              href={item.href}
+              href={localizePath(item.href, locale)}
               className={cn(
                 "rounded-full px-3.5 py-2 text-sm font-medium transition-colors outline-none focus-visible:ring-3 focus-visible:ring-violet/50",
                 isActive(item.href)
@@ -63,18 +83,35 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          <div className="flex items-center rounded-full border border-border bg-background/60 p-0.5">
+            {locales.map((item) => (
+              <Link
+                key={item}
+                href={switchLocalePath(pathname, item)}
+                aria-label={`${labels.language}: ${localeLabels[item]}`}
+                className={cn(
+                  "rounded-full px-2.5 py-1.5 text-xs font-semibold transition-colors",
+                  item === locale
+                    ? "bg-ink text-paper"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {localeToggleLabels[item]}
+              </Link>
+            ))}
+          </div>
           <Cta href={site.appUrl} variant="ghost" size="md">
-            Sign in
+            {labels.signIn}
           </Cta>
-          <Cta href="/contact" variant="primary" size="md" withArrow>
-            Request a demo
+          <Cta href="/contact" locale={locale} variant="primary" size="md" withArrow>
+            {labels.requestDemo}
           </Cta>
         </div>
 
         <button
           type="button"
           className="grid size-10 place-items-center rounded-lg text-foreground outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-violet/50 md:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={open ? labels.closeMenu : labels.openMenu}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
@@ -92,10 +129,10 @@ export function Navbar() {
             className="overflow-hidden border-t border-border bg-background md:hidden"
           >
             <div className="flex flex-col gap-1 px-5 py-4">
-              {primaryNav.map((item) => (
+              {nav.map((item) => (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={localizePath(item.href, locale)}
                   onClick={closeMenu}
                   className={cn(
                     "rounded-lg px-3 py-2.5 text-base font-medium",
@@ -107,12 +144,30 @@ export function Navbar() {
                   {item.label}
                 </Link>
               ))}
+              <div className="mt-3 flex items-center gap-2 border-t border-border pt-4">
+                <span className="text-xs font-medium text-muted-foreground">{labels.language}</span>
+                <div className="ml-auto flex rounded-full border border-border p-0.5">
+                  {locales.map((item) => (
+                    <Link
+                      key={item}
+                      href={switchLocalePath(pathname, item)}
+                      onClick={closeMenu}
+                      className={cn(
+                        "rounded-full px-2.5 py-1.5 text-xs font-semibold",
+                        item === locale ? "bg-ink text-paper" : "text-muted-foreground",
+                      )}
+                    >
+                      {localeToggleLabels[item]}
+                    </Link>
+                  ))}
+                </div>
+              </div>
               <div className="mt-3 flex flex-col gap-2 border-t border-border pt-4">
                 <Cta href={site.appUrl} variant="outline" size="lg" className="w-full" onClick={closeMenu}>
-                  Sign in
+                  {labels.signIn}
                 </Cta>
-                <Cta href="/contact" variant="primary" size="lg" className="w-full" withArrow onClick={closeMenu}>
-                  Request a demo
+                <Cta href="/contact" locale={locale} variant="primary" size="lg" className="w-full" withArrow onClick={closeMenu}>
+                  {labels.requestDemo}
                 </Cta>
               </div>
             </div>

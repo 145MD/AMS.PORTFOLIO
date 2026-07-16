@@ -1,45 +1,54 @@
 import type { Metadata } from "next";
-import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
 import { Section, Container } from "@/components/primitives";
 import { ContactForm } from "@/components/ContactForm";
-import { site } from "@/lib/content";
+import { getIcon } from "@/lib/icons";
+import { hasLocale, locales } from "@/lib/i18n";
+import { getContent } from "@/lib/localized-content";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Request a ClassPass demo or get in touch. We'll tailor a walkthrough to your institute.",
-};
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
 
-const channels = [
-  { icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
-  { icon: Phone, label: "Phone", value: site.phone, href: site.phoneHref },
-  { icon: MessageCircle, label: "WhatsApp", value: "Message us", href: site.whatsapp },
-  { icon: MapPin, label: "Location", value: site.locationLine, href: null },
-];
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/contact">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  return getContent(lang).pages.contact.metadata;
+}
 
-export default function ContactPage() {
+export default async function ContactPage({ params }: PageProps<"/[lang]/contact">) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+
+  const content = getContent(lang);
+  const page = content.pages.contact;
+
   return (
     <>
       <PageHero
-        eyebrow="Contact"
-        title="Let's set up a walkthrough"
-        description="Tell us a little about your institute and we'll show you ClassPass running on your kind of classes and fees."
+        eyebrow={page.hero.eyebrow}
+        title={page.hero.title}
+        description={page.hero.description}
       />
 
       <Section>
         <Container>
           <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-14">
             <div>
-              <h2 className="text-display text-xl">Reach us directly</h2>
+              <h2 className="text-display text-xl">{page.reachTitle}</h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Prefer to skip the form? Any of these work.
+                {page.reachDescription}
               </p>
               <ul className="mt-6 space-y-3">
-                {channels.map((c) => {
+                {page.channels.map((c) => {
+                  const Icon = getIcon(c.icon);
                   const inner = (
                     <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-4">
                       <div className="grid size-10 place-items-center rounded-lg bg-muted text-violet">
-                        <c.icon className="size-5" />
+                        <Icon className="size-5" />
                       </div>
                       <div>
                         <p className="text-xs text-muted-foreground">{c.label}</p>
@@ -65,11 +74,11 @@ export default function ContactPage() {
                 })}
               </ul>
               <p className="mt-6 text-xs text-muted-foreground">
-                Contact details are placeholders until launch.
+                {page.placeholderNotice}
               </p>
             </div>
 
-            <ContactForm />
+            <ContactForm content={content} />
           </div>
         </Container>
       </Section>

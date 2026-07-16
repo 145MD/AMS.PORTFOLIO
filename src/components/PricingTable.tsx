@@ -1,18 +1,27 @@
 import { Check } from "lucide-react";
 import { Container, Cta } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
-import { tiers } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
+import type { MarketingContent } from "@/lib/localized-content";
 import { cn } from "@/lib/utils";
 
 function formatLKR(amount: number) {
   return new Intl.NumberFormat("en-LK").format(amount);
 }
 
-export function PricingTable() {
+export function PricingTable({
+  locale,
+  content,
+}: {
+  locale: Locale;
+  content: MarketingContent;
+}) {
+  const copy = content.components.pricing;
+
   return (
     <Container>
       <div className="grid items-stretch gap-5 lg:grid-cols-3">
-        {tiers.map((tier, i) => {
+        {content.tiers.map((tier, i) => {
           const highlight = tier.highlight;
           return (
             <Reveal key={tier.name} delay={i * 0.07}>
@@ -28,7 +37,7 @@ export function PricingTable() {
                   <h3 className="text-display text-lg">{tier.name}</h3>
                   {highlight && (
                     <span className="rounded-full bg-signal px-2.5 py-0.5 text-xs font-semibold text-signal-foreground">
-                      Most popular
+                      {copy.mostPopular}
                     </span>
                   )}
                 </div>
@@ -36,10 +45,10 @@ export function PricingTable() {
 
                 <div className="mt-6 flex items-end gap-1.5">
                   {tier.priceLKR === null ? (
-                    <span className="text-display text-3xl">Custom</span>
+                    <span className="text-display text-3xl">{copy.custom}</span>
                   ) : (
                     <>
-                      <span className="mb-1 text-sm text-muted-foreground">LKR</span>
+                      <span className="mb-1 text-sm text-muted-foreground">{copy.currency}</span>
                       <span className="text-display text-4xl">{formatLKR(tier.priceLKR)}</span>
                     </>
                   )}
@@ -49,6 +58,7 @@ export function PricingTable() {
                 <div className="mt-6">
                   <Cta
                     href={tier.cta.href}
+                    locale={locale}
                     variant={highlight ? "signal" : "primary"}
                     size="lg"
                     className="w-full"
@@ -74,7 +84,7 @@ export function PricingTable() {
         })}
       </div>
       <p className="mt-8 text-center text-xs text-muted-foreground">
-        Prices shown are placeholders in LKR. Final pricing confirmed during onboarding.
+        {copy.placeholderNotice}
       </p>
     </Container>
   );

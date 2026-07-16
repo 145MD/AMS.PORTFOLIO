@@ -13,6 +13,13 @@ import {
   LayoutDashboard,
   Users,
   Lock,
+  Target,
+  Feather,
+  Sparkles,
+  Mail,
+  Phone,
+  MapPin,
+  MessageCircle,
   type LucideIcon,
 } from "lucide-react";
 
@@ -32,6 +39,13 @@ export const iconMap: Record<string, LucideIcon> = {
   LayoutDashboard,
   Users,
   Lock,
+  Target,
+  Feather,
+  Sparkles,
+  Mail,
+  Phone,
+  MapPin,
+  MessageCircle,
 };
 
 export function getIcon(name: string): LucideIcon {

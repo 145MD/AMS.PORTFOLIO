@@ -1,10 +1,20 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { LogoMark } from "@/components/LogoMark";
-import { Cta } from "@/components/primitives";
-import { footerNav, site } from "@/lib/content";
+import { localizePath, type Locale } from "@/lib/i18n";
+import type { MarketingContent } from "@/lib/localized-content";
 
-export function Footer() {
+export function Footer({
+  locale,
+  nav,
+  site,
+  labels,
+}: {
+  locale: Locale;
+  nav: MarketingContent["footerNav"];
+  site: MarketingContent["site"];
+  labels: MarketingContent["common"];
+}) {
   return (
     <footer className="section-ink relative overflow-hidden">
 
@@ -32,13 +42,13 @@ export function Footer() {
           </ul>
         </div>
 
-        {footerNav.map((col) => (
+        {nav.map((col) => (
           <div key={col.title}>
             <h3 className="text-sm font-semibold text-paper">{col.title}</h3>
             <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
               {col.links.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="transition-colors hover:text-paper">
+                  <Link href={localizePath(link.href, locale)} className="transition-colors hover:text-paper">
                     {link.label}
                   </Link>
                 </li>
@@ -51,7 +61,7 @@ export function Footer() {
       <div className="border-t border-ink-line">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-sm text-muted-foreground sm:flex-row sm:px-6 lg:px-8">
           <p>
-            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            © {new Date().getFullYear()} {site.name}. {labels.allRightsReserved}
           </p>
           <p className="font-mono text-xs">{site.domain}</p>
         </div>

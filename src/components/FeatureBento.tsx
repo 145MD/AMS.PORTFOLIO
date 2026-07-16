@@ -3,7 +3,8 @@ import { Check } from "lucide-react";
 import { Container, SectionHeading } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
 import { getIcon } from "@/lib/icons";
-import { features as allFeatures, type Feature } from "@/lib/content";
+import type { Feature } from "@/lib/content";
+import type { MarketingContent } from "@/lib/localized-content";
 import { cn } from "@/lib/utils";
 
 function FeatureCard({ feature, large }: { feature: Feature; large?: boolean }) {
@@ -41,23 +42,28 @@ function FeatureCard({ feature, large }: { feature: Feature; large?: boolean }) 
 
 export function FeatureBento({
   heading = true,
-  features = allFeatures,
+  features,
+  content,
 }: {
   heading?: boolean;
   features?: Feature[];
+  content: MarketingContent;
 }) {
+  const items = features ?? content.features;
+  const copy = content.components.featureBento;
+
   return (
     <Container>
       {heading && (
         <SectionHeading
-          eyebrow="One system, end to end"
-          title="Everything an institute runs on the desk"
-          description="From the tap at the door to the receipt in a parent's hand — the pieces are designed to work as one."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          description={copy.description}
           className="mb-14 max-w-2xl"
         />
       )}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {features.map((f, i) => (
+        {items.map((f, i) => (
           <Reveal key={f.id} delay={(i % 3) * 0.06} className={f.accent ? "sm:col-span-2 lg:col-span-1" : ""}>
             <FeatureCard feature={f} />
           </Reveal>

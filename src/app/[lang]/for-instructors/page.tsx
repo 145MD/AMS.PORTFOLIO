@@ -1,22 +1,35 @@
 import type { Metadata } from "next";
 import { Check } from "lucide-react";
+import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
 import { Section, Container, SectionHeading } from "@/components/primitives";
 import { Reveal } from "@/components/Reveal";
 import { CtaSection } from "@/components/CtaSection";
 import { getIcon } from "@/lib/icons";
-import { audiences, features } from "@/lib/content";
+import { hasLocale, locales } from "@/lib/i18n";
+import { getContent } from "@/lib/localized-content";
 
-const audience = audiences.find((a) => a.id === "instructors")!;
-const instructorFeature = features.find((f) => f.id === "instructors")!;
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
 
-export const metadata: Metadata = {
-  title: "For instructors",
-  description:
-    "A private, self-scoped portal for instructors — your classes, your rosters, your attendance and your revenue-share earnings. Nothing else.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/for-instructors">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  return getContent(lang).pages.instructors.metadata;
+}
 
-export default function ForInstructorsPage() {
+export default async function ForInstructorsPage({ params }: PageProps<"/[lang]/for-instructors">) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+
+  const content = getContent(lang);
+  const page = content.pages.instructors;
+  const audience = content.audiences.find((a) => a.id === "instructors")!;
+  const instructorFeature = content.features.find((f) => f.id === "instructors")!;
+
   return (
     <>
       <PageHero eyebrow={audience.eyebrow} title={audience.title} description={audience.body} />
@@ -48,7 +61,7 @@ export default function ForInstructorsPage() {
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <Reveal>
-              <SectionHeading eyebrow="Self-scoped by design" title={instructorFeature.title} description={instructorFeature.summary} />
+              <SectionHeading eyebrow={page.selfScopedHeading.eyebrow} title={instructorFeature.title} description={instructorFeature.summary} />
               <ul className="mt-6 space-y-3">
                 {instructorFeature.points.map((p) => (
                   <li key={p} className="flex items-start gap-3 text-sm">
@@ -62,23 +75,19 @@ export default function ForInstructorsPage() {
             </Reveal>
             <Reveal delay={0.1}>
               <div className="section-ink rounded-3xl border border-ink-line p-8">
-                <p className="text-xs uppercase tracking-widest text-muted-foreground">My earnings · July</p>
+                <p className="text-xs uppercase tracking-widest text-muted-foreground">{page.earningsLabel}</p>
                 <p className="text-display mt-2 text-4xl text-paper">
                   LKR <span className="text-signal">84,500</span>
                 </p>
                 <div className="mt-6 space-y-3">
-                  {[
-                    { c: "Physics · Theory", v: "42,000" },
-                    { c: "Physics · Revision", v: "27,500" },
-                    { c: "Chemistry · Group", v: "15,000" },
-                  ].map((row) => (
+                  {page.earningsRows.map((row) => (
                     <div key={row.c} className="flex items-center justify-between border-b border-ink-line pb-3 text-sm">
                       <span className="text-paper/90">{row.c}</span>
                       <span className="font-mono text-muted-foreground">LKR {row.v}</span>
                     </div>
                   ))}
                 </div>
-                <p className="mt-4 text-xs text-muted-foreground">Illustrative figures.</p>
+                <p className="mt-4 text-xs text-muted-foreground">{page.illustrative}</p>
               </div>
             </Reveal>
           </div>
@@ -86,7 +95,7 @@ export default function ForInstructorsPage() {
       </Section>
 
       <Section className="pt-0">
-        <CtaSection title="Give your instructors their own view" />
+        <CtaSection locale={lang} content={content} title={page.ctaTitle} />
       </Section>
     </>
   );
